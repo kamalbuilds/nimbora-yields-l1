@@ -27,10 +27,29 @@ Follow these steps to set up the Yield Dex L1 environment:
 
 **Install Dependencies**: Run the following command in your terminal to install the necessary packages:
 
-   ```shell
-   yarn
-   ```
+```shell
+yarn
+```
 
+## Environment Setup
+
+For deploying your contracts with Hardhat-Deploy, use the following command:
+
+Before running the above commands, make sure to set up your environment variables. Change the .env.example file to .env and update the values file in the root directory of your project and fill it as per the example provided in .env.example :
+
+```plaintext
+ALCHEMY_RPC_URL=<Your Alchemy Key>
+PRIVATE_KEY=<Your Private Key>
+NETWORK=goerli
+STRATEGY_NAME=sdai
+```
+
+ALCHEMY_RPC_URL: Your project ID from Infura, used to connect to Ethereum networks.
+PRIVATE_KEY: Your Ethereum private key, used for transactions and contract deployment.
+NETWORK: The network id, can be `sepolia`, `goerli` or `mainnet`
+STRATEGY_NAME: The strategy name you want to deploy, required by `./setup.sh`
+
+Duplicate the `.env.example` and rename it to `.env` file and update the envs.
 
 ## Compile
 
@@ -79,27 +98,7 @@ yarn hardhat deploy --network ${NETWORK} --deploy-scripts deploy/mocks
 yarn hardhat deploy --network ${NETWORK} --deploy-scripts deploy/strategies/sdai
 ```
 
-4. Deploy wstETH strategy
-```shell
-yarn hardhat deploy --network ${NETWORK} --deploy-scripts deploy/strategies/wstETH
-```
-
 This command will execute the deployment scripts using Hardhat-Deploy, deploying your contracts to the specified network.
-
-
-## Environment Setup
-
-For deploying your contracts with Hardhat-Deploy, use the following command:
-
-Before running the above commands, make sure to set up your environment variables. Change the .env.example file to .env and update the values file in the root directory of your project and fill it as per the example provided in .env.example :
-
-```plaintext
-ALCHEMY_RPC_URL=<Your Alchemy Key>
-PRIVATE_KEY=<Your Private Key>
-```
-
-ALCHEMY_RPC_URL: Your project ID from Infura, used to connect to Ethereum networks.
-PRIVATE_KEY: Your Ethereum private key, used for transactions and contract deployment.
 
 ## Building a new strategy
 
