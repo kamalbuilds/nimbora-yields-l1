@@ -39,9 +39,4 @@ echo Grant role to the relayer to process reports.
 yarn hardhat run --network ${NETWORK} scripts/grantRole.ts
 echo
 
-# Set L2 pooling Manager
-echo Set L2 pooling Manager.
-yarn hardhat run --network ${NETWORK} scripts/setL2PoolingManager.ts
-echo
-
 echo "Deployment and setup done :)"
