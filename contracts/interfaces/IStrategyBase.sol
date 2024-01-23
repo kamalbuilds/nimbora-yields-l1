@@ -6,16 +6,9 @@ uint256 constant REPORT = 1;
 uint256 constant WITHDRAW = 2;
 
 interface IStrategyBase {
-    function initializeStrategyBase(
-        address _l2PoolingManager,
-        address _underlyingToken,
-        address _yieldToken
-    ) external;
+    function initializeStrategyBase(address _l2PoolingManager, address _underlyingToken, address _yieldToken) external;
 
-    function handleReport(
-        uint256 actionId,
-        uint256 amount
-    ) external payable returns (uint256, uint256);
+    function handleReport(uint256 actionId, uint256 amount) external payable returns (uint256, uint256);
 
     function nav() external view returns (uint256);
 

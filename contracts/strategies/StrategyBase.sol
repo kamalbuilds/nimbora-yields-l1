@@ -8,11 +8,7 @@ import "../interfaces/IStrategyBase.sol";
 import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol";
 import "../lib/ErrorLib.sol";
 
-abstract contract StrategyBase is
-    Initializable,
-    PausableUpgradeable,
-    IStrategyBase
-{
+abstract contract StrategyBase is Initializable, PausableUpgradeable, IStrategyBase {
     address public poolingManager;
     address public underlyingToken;
     address public yieldToken;
@@ -65,13 +61,11 @@ abstract contract StrategyBase is
     }
 
     function _assertOnlyPoolingManager() internal view {
-        if (address(msg.sender) != poolingManager)
-            revert ErrorLib.InvalidCaller();
+        if (address(msg.sender) != poolingManager) revert ErrorLib.InvalidCaller();
     }
 
     function _assertOnlyRoleOwner() internal view {
-        if (!IAccessControl(poolingManager).hasRole(0, address(msg.sender)))
-            revert ErrorLib.InvalidCaller();
+        if (!IAccessControl(poolingManager).hasRole(0, address(msg.sender))) revert ErrorLib.InvalidCaller();
     }
 
     function _deposit(uint256 amount) internal virtual;
@@ -82,11 +76,7 @@ abstract contract StrategyBase is
         return _yieldToUnderlying(yieldBalance());
     }
 
-    function _yieldToUnderlying(
-        uint256 amount
-    ) internal view virtual returns (uint256);
+    function _yieldToUnderlying(uint256 amount) internal view virtual returns (uint256);
 
-    function _underlyingToYield(
-        uint256 amount
-    ) internal view virtual returns (uint256);
+    function _underlyingToYield(uint256 amount) internal view virtual returns (uint256);
 }

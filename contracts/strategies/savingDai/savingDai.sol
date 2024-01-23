@@ -19,15 +19,9 @@ contract SavingDaiStrategy is StrategyBase {
         _checkAndInitSavingDai(_underlyingToken, _yieldToken);
     }
 
-    function _checkAndInitSavingDai(
-        address _underlyingToken,
-        address _yieldToken
-    ) internal {
+    function _checkAndInitSavingDai(address _underlyingToken, address _yieldToken) internal {
         address dai = ISavingDai(_yieldToken).dai();
-        require(
-            dai == _underlyingToken,
-            "Invalid underlying: Saving Dai Strategy"
-        );
+        require(dai == _underlyingToken, "Invalid underlying: Saving Dai Strategy");
         IERC20(_underlyingToken).approve(_yieldToken, type(uint256).max);
     }
 
@@ -36,36 +30,22 @@ contract SavingDaiStrategy is StrategyBase {
     }
 
     function _withdraw(uint256 amount) internal override returns (uint256) {
-        uint256 yieldAmountToDeposit = ISavingDai(yieldToken).previewWithdraw(
-            amount
-        );
+        uint256 yieldAmountToDeposit = ISavingDai(yieldToken).previewWithdraw(amount);
         uint256 yieldBalance = yieldBalance();
         if (yieldAmountToDeposit > yieldBalance) {
-            uint256 assets = ISavingDai(yieldToken).redeem(
-                yieldBalance,
-                poolingManager,
-                address(this)
-            );
+            uint256 assets = ISavingDai(yieldToken).redeem(yieldBalance, poolingManager, address(this));
             return (assets);
         } else {
-            uint256 assets = ISavingDai(yieldToken).withdraw(
-                amount,
-                poolingManager,
-                address(this)
-            );
+            uint256 assets = ISavingDai(yieldToken).withdraw(amount, poolingManager, address(this));
             return (amount);
         }
     }
 
-    function _underlyingToYield(
-        uint256 amount
-    ) internal view override returns (uint256) {
+    function _underlyingToYield(uint256 amount) internal view override returns (uint256) {
         return ISavingDai(yieldToken).previewDeposit(amount);
     }
 
-    function _yieldToUnderlying(
-        uint256 amount
-    ) internal view override returns (uint256) {
+    function _yieldToUnderlying(uint256 amount) internal view override returns (uint256) {
         return ISavingDai(yieldToken).previewRedeem(amount);
     }
 }
